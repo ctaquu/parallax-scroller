@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Parallax Scrolling Demo</title>
+    <script src="bin/pixi.js"></script>
+</head>
+<!--<body onload="init();">-->
+<body>
+<script>
+    // create an new instance of a pixi stage
+    var stage = new PIXI.Stage(0x66FF99);
+
+    // create a renderer instance
+    var renderer = PIXI.autoDetectRenderer(512, 384);
+
+    // add the renderer view element to the DOM
+    document.body.appendChild(renderer.view);
+
+    requestAnimFrame(update);
+
+    // far texture
+    var farTexture = PIXI.Texture.fromImage("resources/bg-far.png");
+    far = new PIXI.TilingSprite(farTexture, 512, 256);
+    far.position.x = 0;
+    far.position.y = 0;
+    far.tilePosition.x = 0;
+    far.tilePosition.y = 0;
+    stage.addChild(far);
+
+    // mid texture
+    var midTexture = PIXI.Texture.fromImage("resources/bg-mid.png");
+    mid = new PIXI.TilingSprite(midTexture, 512, 256);
+    mid.position.x = 0;
+    mid.position.y = 128;
+    mid.tilePosition.x = 0;
+    mid.tilePosition.y = 0;
+    stage.addChild(mid);
+
+    // create a texture from an image path
+    var texture = PIXI.Texture.fromImage("resources/bunny.png");
+
+    // create a new Sprite using the texture
+    var bunny = new PIXI.Sprite(texture);
+
+    // center the sprites anchor point
+    bunny.anchor.x = 0.5;
+    bunny.anchor.y = 0.5;
+
+    // move the sprite to the center of the screen
+    bunny.position.x = 200;
+    bunny.position.y = 150;
+
+//    stage.addChild(bunny);
+
+    function update() {
+        requestAnimFrame(update);
+
+        // just for fun, let's rotate mr rabbit a little
+        bunny.rotation += 0.1;
+
+        // scroll background
+        far.tilePosition.x -= 0.128;
+        mid.tilePosition.x -= 0.64;
+
+        // render the stage
+        renderer.render(stage);
+    }
+</script>
+</body>
+</html>
